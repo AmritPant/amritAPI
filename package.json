@@ -1,0 +1,25 @@
+{
+  "name": "amrit-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmritPant/amritAPI.git"
+  },
+  "author": "Amrit Pant",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AmritPant/amritAPI/issues"
+  },
+  "homepage": "https://github.com/AmritPant/amritAPI#readme",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.1"
+  }
+}
