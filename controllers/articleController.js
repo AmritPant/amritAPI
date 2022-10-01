@@ -1,8 +1,20 @@
 const Article = require('../models/articleModel');
+const ApiFeatures = require('../utils/apiFeatures');
 
 exports.getAllArticles = async (req, res) => {
-  const articles = await Article.find({});
-  res.status(200).json(articles);
+  const query = Article.find({});
+
+  const apiFeatures = new ApiFeatures(query, req.query)
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .limit();
+  const articles = await apiFeatures.query;
+
+  res
+    .status(200)
+    .json({ status: 'success', count: articles.length, data: articles });
 };
 
 exports.addNewArticle = async (req, res) => {
