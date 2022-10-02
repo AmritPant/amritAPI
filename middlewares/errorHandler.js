@@ -51,6 +51,11 @@ module.exports = function (err, req, res, next) {
     );
   };
 
+  // (c) Handling CAST errors
+  const castError = err => {
+    return new CustomError(`Invalid ${err.path}: ${err.value}`, 400);
+  };
+
   if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
 
@@ -60,6 +65,9 @@ module.exports = function (err, req, res, next) {
 
     // Checking for Duplication Errors
     if (error.code === 11000) error = duplicateKeyError(error);
+
+    // Checking for CastErrors
+    if ((error.name = 'CastError')) error = castError(error);
 
     handleErrProd(error, res);
   } else if (process.env.NODE_ENV === 'development') {
