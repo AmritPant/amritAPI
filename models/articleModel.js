@@ -6,6 +6,7 @@ const articleSchema = new mongoose.Schema({
     required: [true, 'Please Provide Title for an Article!'],
     minLength: [8, 'A title cannot be less than 8 character'],
     maxLength: [50, 'A title cannot exceed 50 Characters'],
+    unique: true,
   },
   description: {
     type: String,
@@ -15,7 +16,10 @@ const articleSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Please Provide the Cateogry of the Article'],
-    enum: ['tech', 'productivity', 'lifestyle', 'education'],
+    enum: {
+      values: ['tech', 'productivity', 'lifestyle', 'education'],
+      message: '{VALUE} is not valid category',
+    },
   },
   thumbnail: {
     type: String,
