@@ -27,7 +27,7 @@ module.exports = function (err, req, res, next) {
       // Other Unknown Errors | Don't Leak the important data to the client
     } else {
       // 1)   Logging Error
-      console.log('ERROR 🔥🔥 ', err);
+      // console.log('ERROR 🔥🔥 ', err);
 
       // 2) Send a very simple Error Message
       res.status(500).json({
@@ -38,7 +38,7 @@ module.exports = function (err, req, res, next) {
   };
   // (a) Handling a Validation Error
   const handleValidationError = error => {
-    return new CustomError(error.errors.category.message, 400);
+    return new CustomError(error.message, 400);
   };
 
   // (b) Hanlding a Duplicate key Error
@@ -58,16 +58,16 @@ module.exports = function (err, req, res, next) {
 
   if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
+    error.message = err.message;
 
     // Checking for Validation Error
-    if (error?.errors?.category?.name === 'ValidatorError')
-      error = handleValidationError(error);
+    if (err.name === 'ValidationError') error = handleValidationError(error);
 
     // Checking for Duplication Errors
-    if (error.code === 11000) error = duplicateKeyError(error);
+    if (err.code === 11000) error = duplicateKeyError(error);
 
     // Checking for CastErrors
-    if (error.name === 'CastError') error = castError(error);
+    if (err.name === 'CastError') error = castError(error);
 
     handleErrProd(error, res);
   } else if (process.env.NODE_ENV === 'development') {
