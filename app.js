@@ -1,5 +1,6 @@
 const express = require('express');
 const articleRouter = require('./routes/articleRoutes');
+const projectRouter = require('./routes/projectRoute');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -11,7 +12,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routers
-app.use('/api/v1/article', articleRouter);
+app.use('/api/v1/article', articleRouter); // Mounting the Router
+app.use('/api/v1/project', projectRouter);
 
 // Error Handler
 app.use(errorHandler);
