@@ -67,7 +67,7 @@ module.exports = function (err, req, res, next) {
     if (error.code === 11000) error = duplicateKeyError(error);
 
     // Checking for CastErrors
-    if ((error.name = 'CastError')) error = castError(error);
+    if (error.name === 'CastError') error = castError(error);
 
     handleErrProd(error, res);
   } else if (process.env.NODE_ENV === 'development') {
