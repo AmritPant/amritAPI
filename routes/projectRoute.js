@@ -1,15 +1,15 @@
 const express = require('express');
 const projectController = require('../controllers/projectController');
+const factory = require('../controllers/handleFactory');
 
 const Router = express.Router();
 
-Router.route('/')
-  .get(projectController.getAllProjects)
-  .post(projectController.createProject);
+Router.get('/', projectController.getAllProjects);
+Router.get('/:id', projectController.getOneProject);
 
-Router.route('/:id')
-  .get(projectController.getOneProject)
-  .patch(projectController.updateProject)
-  .delete(projectController.deleteProject);
+// Protected Routes
+Router.post('/', factory.protect, projectController.createProject);
+Router.patch('/:id', factory.protect, projectController.updateProject);
+Router.delete('/:id', factory.protect, projectController.deleteProject);
 
 module.exports = Router;

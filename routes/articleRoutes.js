@@ -1,15 +1,16 @@
 const express = require('express');
 const articleController = require('../controllers/articleController');
+const factory = require('../controllers/handleFactory');
 
 const Router = express.Router();
 
-Router.route('/')
-  .get(articleController.getAllArticles)
-  .post(articleController.addNewArticle);
+// Unprotected Route
+Router.get('/', articleController.getAllArticles);
+Router.get('/:id', articleController.getOneArticle);
 
-Router.route('/:id')
-  .get(articleController.getOneArticle)
-  .patch(articleController.updateArticle)
-  .delete(articleController.deleteArticle);
+// Protected Routes
+Router.patch('/:id', factory.protect, articleController.updateArticle);
+Router.delete('/:id', factory.protect, articleController.deleteArticle);
+Router.post('/', factory.protect, articleController.addNewArticle);
 
 module.exports = Router;
