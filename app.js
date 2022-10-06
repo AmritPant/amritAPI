@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const articleRouter = require('./routes/articleRoutes');
 const projectRouter = require('./routes/projectRoute');
 const errorHandler = require('./middlewares/errorHandler');
@@ -7,7 +8,13 @@ const contactUsRouter = require('./routes/contactUsRoute');
 
 const app = express();
 
+// Express Helmet for Secure Headers
+app.use(helmet());
+
+// body-parser
 app.use(express.json());
+
+// Request Logger
 if (process.env.NODE_ENV === 'development') {
   const morgan = require('morgan');
   app.use(morgan('dev'));
