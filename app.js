@@ -1,12 +1,13 @@
+const xss = require('xss-clean');
 const helmet = require('helmet');
 const express = require('express');
 const rateLimiter = require('express-rate-limit');
+const projectRouter = require('./routes/projectRoute');
 const mongoSanitize = require('express-mongo-sanitize');
 const articleRouter = require('./routes/articleRoutes');
-const projectRouter = require('./routes/projectRoute');
+const contactUsRouter = require('./routes/contactUsRoute');
 const errorHandler = require('./middlewares/errorHandler');
 const newsletterRouter = require('./routes/newsletterRoute');
-const contactUsRouter = require('./routes/contactUsRoute');
 
 const app = express();
 
@@ -34,6 +35,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(mongoSanitize());
 
 // Data sanitization against XSS
+app.use(xss());
 
 // Routers
 app.use('/api/v1/article', articleRouter); // Mounting the Router
