@@ -1,3 +1,4 @@
+const hpp = require('hpp');
 const xss = require('xss-clean');
 const helmet = require('helmet');
 const express = require('express');
@@ -36,6 +37,9 @@ app.use(mongoSanitize());
 
 // Data sanitization against XSS
 app.use(xss());
+
+// Preventing From Parameter Pollution
+app.use(hpp({ whitelist: [] }));
 
 // Routers
 app.use('/api/v1/article', articleRouter); // Mounting the Router
