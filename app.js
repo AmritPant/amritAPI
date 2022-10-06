@@ -1,6 +1,7 @@
 const helmet = require('helmet');
 const express = require('express');
 const rateLimiter = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
 const articleRouter = require('./routes/articleRoutes');
 const projectRouter = require('./routes/projectRoute');
 const errorHandler = require('./middlewares/errorHandler');
@@ -23,13 +24,16 @@ app.use('/api', limit);
 // body-parser
 app.use(express.json());
 
-// Data sanitization against NoSQL query injection
-
 // Request Logger
 if (process.env.NODE_ENV === 'development') {
   const morgan = require('morgan');
   app.use(morgan('dev'));
 }
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS
 
 // Routers
 app.use('/api/v1/article', articleRouter); // Mounting the Router
