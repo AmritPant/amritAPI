@@ -1,4 +1,5 @@
 const hpp = require('hpp');
+const path = require('path');
 const xss = require('xss-clean');
 const helmet = require('helmet');
 const express = require('express');
@@ -25,6 +26,9 @@ app.use('/api', limit);
 
 // body-parser
 app.use(express.json());
+
+// Serving Static Files
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 // Request Logger
 if (process.env.NODE_ENV === 'development') {
