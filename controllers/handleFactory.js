@@ -16,14 +16,14 @@ module.exports.deleteOne = Model =>
     res.status(200).json({ status: 'sucess', data: null });
   });
 
-// Deleting a Document
+// Updating a Document
 module.exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const document = await Model.findById(id);
     if (!document)
       return next(
-        new CustomError("The Article You are searching for doesn't exist", 404)
+        new CustomError("The Document You are searching for doesn't exist", 404)
       );
     const data = await Model.findByIdAndUpdate(id, req.body, {
       runValidators: true,
@@ -68,6 +68,28 @@ module.exports.protect = (req, res, next) => {
 
   next();
 };
+
+module.exports.updateThumbnail = Model =>
+  catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    const document = await Model.findById(id);
+
+    if (!document)
+      return next(
+        new CustomError("The Document You are searching for doesn't exist", 404)
+      );
+
+    const data = await Model.findByIdAndUpdate(
+      id,
+      { thumbnail: req.file.filename },
+      {
+        runValidators: true,
+        returnDocument: 'after',
+      }
+    );
+
+    res.status(200).json({ status: 'sucess', data: data });
+  });
 
 module.exports.checkIP = (req, res, next) => {
   console.log(req);

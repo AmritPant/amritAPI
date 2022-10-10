@@ -1,7 +1,6 @@
 const Article = require('../models/articleModel');
 const ApiFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
-const CustomError = require('../utils/CustomError');
 const factory = require('../controllers/handleFactory');
 
 exports.getAllArticles = catchAsync(async (req, res) => {
@@ -24,3 +23,4 @@ exports.addNewArticle = factory.createOne(Article);
 exports.getOneArticle = factory.getOne(Article);
 exports.updateArticle = factory.updateOne(Article);
 exports.deleteArticle = factory.deleteOne(Article);
+exports.updateThumbnail = factory.updateThumbnail(Article);

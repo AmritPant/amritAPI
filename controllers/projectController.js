@@ -22,3 +22,4 @@ exports.getOneProject = factory.getOne(Project);
 exports.updateProject = factory.updateOne(Project);
 exports.deleteProject = factory.deleteOne(Project);
 exports.createProject = factory.createOne(Project);
+exports.updateThumbnail = factory.updateThumbnail(Project);
