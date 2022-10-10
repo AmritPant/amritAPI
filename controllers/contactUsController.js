@@ -27,7 +27,7 @@ exports.postMessage = catchAsync(async (req, res, next) => {
   let msg = '';
 
   fs.readFile(
-    `${__dirname}/../docs/thanksForContacting.html`,
+    `${__dirname}/../public/docs/thanksForContacting.html`,
     'utf-8',
     (err, data) => {
       if (err) next(new CustomError('Unexpected Server Error', 500));
