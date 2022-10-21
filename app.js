@@ -1,4 +1,5 @@
 const hpp = require('hpp');
+const cors = require('cors');
 const path = require('path');
 const xss = require('xss-clean');
 const helmet = require('helmet');
@@ -12,6 +13,9 @@ const errorHandler = require('./middlewares/errorHandler');
 const newsletterRouter = require('./routes/newsletterRoute');
 
 const app = express();
+
+// Setting up Cross origin resource sharing
+app.use(cors());
 
 // Express Helmet for Secure Headers
 app.use(helmet());
@@ -27,14 +31,15 @@ app.use('/api', limit);
 // body-parser
 app.use(express.json());
 
-// Serving Static Files
-app.use('/static', express.static(path.join(__dirname, 'public')));
-
 // Request Logger
 if (process.env.NODE_ENV === 'development') {
   const morgan = require('morgan');
   app.use(morgan('dev'));
 }
+
+// Serving Static Files
+app.use('/static', express.static(path.join(__dirname, 'public')));
+
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
