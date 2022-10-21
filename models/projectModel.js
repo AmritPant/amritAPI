@@ -13,6 +13,12 @@ const projectSchema = new mongoose.Schema({
     required: [true, 'Please Provide the title of the Project'],
     minLength: 100,
   },
+  miniDescription: {
+    type: String,
+    required: [true, 'Please Provide mini description for an Article!'],
+    minLength: [30, 'A title cannot be less than 8 character'],
+    maxLength: [300, 'A title cannot be less than 8 character'],
+  },
   platform: {
     type: String,
     required: [true, 'Please Provide the platform of the Project'],
