@@ -11,7 +11,7 @@ const articleSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, 'Please Provide Description for an Article!'],
-    minLength: [120, 'A title cannot be less than 8 character'],
+    minLength: [120, 'A discription cannot be less than 8 character'],
   },
   miniDescription: {
     type: String,
