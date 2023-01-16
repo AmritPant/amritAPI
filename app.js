@@ -4,6 +4,7 @@ const path = require('path');
 const xss = require('xss-clean');
 const helmet = require('helmet');
 const express = require('express');
+const bookRouter = require('./routes/bookRoute');
 const rateLimiter = require('express-rate-limit');
 const projectRouter = require('./routes/projectRoute');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -40,7 +41,6 @@ if (process.env.NODE_ENV === 'development') {
 // Serving Static Files
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
-
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
@@ -55,6 +55,7 @@ app.use('/api/v1/article', articleRouter); // Mounting the Router
 app.use('/api/v1/project', projectRouter);
 app.use('/api/v1/newsletter', newsletterRouter);
 app.use('/api/v1/contact', contactUsRouter);
+app.use('/api/v1/book', bookRouter);
 
 // Error Handler
 app.use(errorHandler);
