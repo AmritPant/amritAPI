@@ -79,6 +79,9 @@ module.exports.updateThumbnail = Model =>
         new CustomError("The Document You are searching for doesn't exist", 404)
       );
 
+    if (!req.file)
+      return next(new CustomError('Please Provide the required file', 400));
+
     const data = await Model.findByIdAndUpdate(
       id,
       { thumbnail: req.file.filename },
